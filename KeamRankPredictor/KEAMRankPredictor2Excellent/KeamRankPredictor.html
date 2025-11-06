@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEAM College Predictor 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: { extend: { fontFamily: { inter: ['Inter', 'sans-serif'] } } }
+      }
+    </script>
+    <style>
+        html, body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        /* Custom Scrollbar for better aesthetics */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        /* Loading Indicator Styling */
+        .loading-indicator {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            color: #4A5568;
+        }
+
+        /* Dropdown Specific Styling (for both branch and college) */
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .custom-dropdown-button {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #D1D5DB;
+            border-radius: 0.5rem;
+            background-color: white;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+            color: #4B5563;
+            font-size: 0.875rem;
+        }
+
+        .custom-dropdown-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5);
+            border-color: transparent;
+        }
+
+        .custom-dropdown-content {
+            display: none;
+            position: absolute;
+            background: #f9f9f9;
+            min-width: 100%;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 10;
+            border-radius: 0.5rem;
+            border: 1.5px solid #E5E7EB;
+            margin-top: 5px;
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.10);
+            transition: opacity 0.2s, transform 0.2s;
+            opacity: 0;
+            transform: scaleY(0.97);
+            transform-origin: top;
+        }
+
+        .custom-dropdown-content.show {
+            display: block;
+            opacity: 1;
+            transform: scaleY(1);
+        }
+
+        .custom-dropdown-item {
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.15s;
+            border-radius: 0.375rem;
+        }
+
+        .custom-dropdown-item:hover {
+            background: #e0e7ff;
+        }
+
+        .custom-dropdown-item input[type="checkbox"] {
+            margin-right: 8px;
+            height: 1.25rem;
+            width: 1.25rem;
+            border-radius: 0.25rem;
+            border-color: #D1D5DB;
+            color: #2563EB;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            cursor: pointer;
+        }
+
+        .custom-dropdown-item label {
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 0.25rem;
+            font-size: 0.95rem;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px #c7d2fe;
+        }
+
+        input[type="checkbox"] {
+            accent-color: #2563eb;
+            transition: transform 0.15s;
+        }
+
+        input[type="checkbox"]:active {
+            transform: scale(1.15);
+        }
+
+        /* Dark mode overrides */
+        html.dark body { background: linear-gradient(135deg, #181f2a 0%, #232946 100%) !important; }
+        html.dark .custom-dropdown-content { background: #232946; border-color: #334155; color: #e0e7ef; }
+        html.dark .custom-dropdown-item:hover { background: #334155; }
+        html.dark .search-input { background: #232946; color: #e0e7ef; border-color: #334155; }
+        html.dark .search-input:focus { border-color: #6366f1; box-shadow: 0 0 0 2px #6366f1; }
+        /* Theme Toggle Button Animation */
+        .theme-toggle {
+            transform: translateY(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1), 0 4px 8px -4px rgba(99, 102, 241, 0.2);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+        
+        /* Coordinated hover effect with main box */
+        .main-container {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .main-container:hover .theme-toggle {
+            transform: translateY(-4px) scale(1.05);
+        }
+
+        .main-container:hover .content-box {
+            transform: scale(1.01);
+        }
+        
+        /* Dual-icon sun/moon toggle refined animation */
+        #sunIcon, #moonIcon {
+            pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .dark #sunIcon {
+            opacity: 0;
+            transform: rotate(-45deg) scale(0.75);
+        }
+        
+        .dark #moonIcon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+        
+        #moonIcon {
+            opacity: 0;
+            transform: rotate(45deg) scale(0.75);
+        }
+        
+        #sunIcon {
+            opacity: 1;
+            transform: rotate(0) scale(1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .main-container {
+                width: 100%;
+                padding: 0;
+            }
+            .content-box {
+                border-radius: 1rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .text-[1.08rem] {
+                font-size: 1rem;
+            }
+            .gap-4 {
+                gap: 1rem;
+            }
+            .p-6 {
+                padding: 1.5rem;
+            }
+            .p-4 {
+                padding: 1rem;
+            }
+            .text-xs {
+                font-size: 0.875rem;
+            }
+            .text-sm {
+                font-size: 0.925rem;
+            }
+            .rounded-lg {
+                border-radius: 0.375rem;
+            }
+            .rounded-full {
+                border-radius: 9999px;
+            }
+            /* Adjust button sizes */
+            .py-2 {
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+            }
+            .px-4 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            /* Hide some elements or reduce their size */
+            #sunIcon, #moonIcon {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+            .w-7.h-7 {
+                width: 1.75rem;
+                height: 1.75rem;
+            }
+            /* Adjust dropdowns */
+            .custom-dropdown-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.825rem;
+            }
+            .custom-dropdown-content {
+                max-height: 200px;
+            }
+            .search-input {
+                padding: 0.5rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-200 via-indigo-100 to-purple-200 dark:from-[#181f2a] dark:via-[#232946] dark:to-[#181f2a] min-h-screen flex items-center justify-center p-4 font-inter transition-colors duration-300">
+    <div class="main-container relative w-full max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl">
+        <!-- Dark/Light Mode Toggle -->
+        <div class="absolute top-4 right-4 z-20 flex items-center">
+            <button
+                id="themeToggle"
+                class="theme-toggle bg-white/80 dark:bg-[#232946] border border-blue-200 dark:border-[#334155] rounded-full shadow p-1 transition-all duration-300 flex items-center justify-center hover:border-primary-400"
+                type="button"
+                title="Toggle theme"
+                aria-label="Toggle theme"
+                style="width:2.5rem;height:2.5rem;"
+            >
+                <span class="relative w-7 h-7 flex items-center justify-center">
+                    <!-- Sun Icon -->
+                    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 w-7 h-7 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M12 6a6 6 0 100 12 6 6 0 000-12z" />
+                    </svg>
+                    <!-- Moon Icon -->
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="absolute inset-0 w-7 h-7 text-indigo-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </span>
+            </button>
+        </div>
+        <div class="content-box bg-white/80 dark:bg-[#232946]/90 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl w-full transition-all duration-300 border border-blue-100 dark:border-[#334155]">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-center mb-6 tracking-tight font-inter" style="background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; line-height: 1.1;">KEAM College Predictor 2025</h1>
+            <p class="text-gray-600 dark:text-blue-100/80 text-center text-base sm:text-lg mb-8 font-medium font-inter">Enter your predicted KEAM rank and select your category to find eligible colleges and courses based on 2024 cutoffs.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-8">
+                <div>
+                    <label for="predictedRank" class="block text-gray-700 dark:text-blue-100 text-sm font-semibold mb-2">Predicted Rank:</label>
+                    <input type="number" id="predictedRank" placeholder="e.g., 1500" class="w-full px-4 py-2 border border-gray-300 dark:border-[#334155] rounded-lg focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200 text-sm sm:text-base bg-white/90 dark:bg-[#181f2a] dark:text-blue-100 shadow-sm font-inter">
+                </div>
+                <div>
+                    <label for="studentCategory" class="block text-gray-700 dark:text-blue-100 text-sm font-semibold mb-2">Student Category:</label>
+                    <select id="studentCategory" class="w-full px-4 py-2 border border-gray-300 dark:border-[#334155] rounded-lg bg-white/90 dark:bg-[#181f2a] dark:text-blue-100 focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200 text-sm sm:text-base shadow-sm font-inter">
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 dark:text-blue-100 text-sm font-semibold mb-2">Preferred Branches:</label>
+                    <div class="relative" id="branchDropdown">
+                        <button type="button" class="custom-dropdown-button w-full px-3 py-2 border border-gray-300 dark:border-[#334155] rounded-lg bg-white/90 dark:bg-[#181f2a] dark:text-blue-100 flex justify-between items-center text-sm transition duration-200 hover:shadow-md focus:ring-2 focus:ring-blue-300 font-inter" id="branchDropdownButton">
+                            <span>Select Branches (Leave unchecked for no specific preference)</span>
+                            <svg class="w-4 h-4 ml-2 text-gray-500 dark:text-blue-200 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="custom-dropdown-content left-0 right-0 ring-1 ring-blue-200 dark:ring-[#334155] font-inter" id="branchDropdownContent">
+                            <input type="text" class="search-input" placeholder="Search branches...">
+                            <div class="p-2 text-gray-500 dark:text-blue-200">Loading Branches...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-gray-700 dark:text-blue-100 text-sm font-semibold mb-2">Filter Colleges:</label>
+                    <div class="relative" id="collegeFilterDropdown">
+                        <button type="button" class="custom-dropdown-button w-full px-3 py-2 border border-gray-300 dark:border-[#334155] rounded-lg bg-white/90 dark:bg-[#181f2a] dark:text-blue-100 flex justify-between items-center text-sm transition duration-200 hover:shadow-md focus:ring-2 focus:ring-blue-300 font-inter" id="collegeFilterButton">
+                            <span>Select Colleges (Leave unchecked for all colleges)</span>
+                            <svg class="w-4 h-4 ml-2 text-gray-500 dark:text-blue-200 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="custom-dropdown-content left-0 right-0 ring-1 ring-blue-200 dark:ring-[#334155] font-inter" id="collegeFilterContent">
+                            <input type="text" class="search-input" placeholder="Search colleges...">
+                            <div class="p-2 text-gray-500 dark:text-blue-200">No colleges loaded yet.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <button id="predictButton" class="w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 text-white py-2 sm:py-3 rounded-lg font-bold text-base sm:text-lg hover:from-blue-700 hover:to-purple-600 focus:outline-none focus:ring-4 focus:ring-blue-300 transition duration-300 shadow-md hover:shadow-xl active:scale-95 font-inter">Predict Colleges</button>
+                </div>
+            </div>
+            <div id="loadingIndicator" class="flex flex-col items-center justify-center my-4 text-blue-700 dark:text-blue-200 hidden font-inter">
+                <svg class="animate-spin h-6 w-6 text-blue-600 dark:text-blue-200 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>
+                <span>Fetching data, please wait...</span>
+            </div>
+            <div id="results" class="mt-8 p-4 sm:p-6 bg-gray-50/80 dark:bg-[#181f2a]/80 rounded-xl shadow-inner border border-gray-200 dark:border-[#334155] min-h-[150px] max-h-[350px] sm:max-h-[400px] overflow-y-auto custom-scrollbar transition-all duration-300 font-inter text-[1.08rem] leading-relaxed">
+                <p class="text-gray-500 dark:text-blue-200 text-center text-sm sm:text-base">Your predicted colleges and courses will appear here.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device type prompt modal -->
+    <!-- <div id="devicePromptModal" class="fixed inset-0 bg-black/40 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity duration-300">
+      <div class="bg-white dark:bg-[#232946] rounded-2xl shadow-2xl max-w-sm w-full p-6 sm:p-8 relative flex flex-col gap-4 border border-blue-100 dark:border-[#334155]">
+        <h2 class="text-xl font-bold text-blue-700 dark:text-blue-200 mb-2">Welcome!</h2>
+        <p class="text-gray-700 dark:text-blue-100 text-base mb-4">For the best experience, please let us know your device type:</p>
+        <div class="flex gap-4">
+          <button id="chooseDesktop" class="flex-1 px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Desktop/Laptop</button>
+          <button id="chooseMobile" class="flex-1 px-4 py-2 rounded-lg bg-indigo-500 text-white font-semibold hover:bg-indigo-600 transition">Mobile/Tablet</button>
+        </div>
+      </div>
+    </div> -->
+
+    <script>
+        let keamData = [];
+        const predictedRankInput = document.getElementById('predictedRank');
+        const studentCategorySelect = document.getElementById('studentCategory');
+        const predictButton = document.getElementById('predictButton');
+        const resultsDiv = document.getElementById('results');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+
+        const branchDropdown = document.getElementById('branchDropdown');
+        const branchDropdownButton = document.getElementById('branchDropdownButton');
+        const branchDropdownContent = document.getElementById('branchDropdownContent');
+        const branchSearchInput = branchDropdownContent.querySelector('.search-input');
+
+        const collegeFilterDropdown = document.getElementById('collegeFilterDropdown');
+        const collegeFilterButton = document.getElementById('collegeFilterButton');
+        const collegeFilterContent = document.getElementById('collegeFilterContent');
+        const collegeSearchInput = collegeFilterContent.querySelector('.search-input');
+
+        const categoryOrder = ["SM", "EZ", "MU", "LA", "BH", "DV", "VK", "BX", "KN", "KU", "SC", "ST", "EW"];
+        const categoryNames = {
+            "SM": "SM (State Merit/General)",
+            "EZ": "EZ (Ezhava)",
+            "MU": "MU (Muslim)",
+            "LA": "LA (Latin Catholic)",
+            "BH": "BH (Other Backward Hindu)",
+            "DV": "DV (Dheevara)",
+            "VK": "VK (Viswakarma)",
+            "BX": "BX (B.X.)",
+            "KN": "KN (Kusavan)",
+            "KU": "KU (Kudumi)",
+            "SC": "SC (Scheduled Caste)",
+            "ST": "ST (Scheduled Tribe)",
+            "EW": "EW (EWS)"
+        };
+
+        async function fetchKeamData() {
+            loadingIndicator.style.display = 'block';
+            predictButton.disabled = true;
+            studentCategorySelect.innerHTML = '<option value="">Loading Categories...</option>';
+            branchDropdownContent.querySelector('div').textContent = 'Loading Branches...'; // Update text
+            collegeFilterContent.querySelector('div').textContent = 'Loading Colleges...'; // Update text
+
+            try {
+                const githubUrl = 'https://raw.githubusercontent.com/zafarlovesprogramming/KEAM-Cutoff-2025-TO-APPLY---Table-1/refs/heads/main/KEAM%20Cutoff%202025%20TO%20APPLY%20-%20Table%201.tsv';
+                const response = await fetch(githubUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const tsvText = await response.text();
+                keamData = parseTSV(tsvText);
+                populateCategories();
+                populateBranches();
+                populateCollegesFilter(keamData); // Populate initial college filter with all colleges
+                predictButton.disabled = false;
+            } catch (error) {
+                console.error("Error fetching or parsing KEAM data:", error);
+                resultsDiv.innerHTML = '<p class="text-red-600 text-center">Failed to load data. Please ensure the TSV file from GitHub is correctly formatted and accessible, and that its header is present.</p>';
+                studentCategorySelect.innerHTML = '<option value="">Error loading categories</option>';
+                branchDropdownContent.querySelector('div').textContent = 'Error loading branches';
+                collegeFilterContent.querySelector('div').textContent = 'Error loading colleges';
+            } finally {
+                loadingIndicator.style.display = 'none';
+            }
+        }
+
+        function parseTSV(tsvText) {
+            const lines = tsvText.split('\n');
+            let headerLineIndex = -1;
+
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim().startsWith('Name of College')) {
+                    headerLineIndex = i;
+                    break;
+                }
+            }
+
+            if (headerLineIndex === -1) {
+                console.error("Error: 'Name of College' header line not found in TSV.");
+                throw new Error("'Name of College' header line not found in TSV.");
+            }
+
+            const headerLine = lines[headerLineIndex];
+            const headers = headerLine.split('\t').map(h => h.trim()).filter(Boolean);
+
+            const collegeNameColIndex = headers.indexOf('Name of College');
+            const courseColIndex = headers.indexOf('Course');
+            const specialCategoriesColIndex = headers.indexOf('Special Categories');
+
+            const data = [];
+            const tsvHeaderToCategoryCode = {};
+            for (const code of categoryOrder) {
+                const fullHeader = headers.find(h => h.includes(code));
+                if (fullHeader) {
+                    tsvHeaderToCategoryCode[fullHeader] = code;
+                }
+            }
+
+            for (let i = headerLineIndex + 1; i < lines.length; i++) {
+                const line = lines[i];
+                const values = line.split('\t').map(v => v.trim());
+
+                if (values.length < headers.length || line.trim() === '') {
+                    continue;
+                }
+
+                if (collegeNameColIndex === -1 || courseColIndex === -1 ) {
+                    console.error("Missing required headers in TSV: 'Name of College' or 'Course'.");
+                    throw new Error("Missing required headers in TSV.");
+                }
+
+                const collegeName = values[collegeNameColIndex];
+                const courseName = values[courseColIndex];
+
+                if (!collegeName || !courseName) {
+                    continue;
+                }
+
+                headers.forEach((header, index) => {
+                    const categoryCode = tsvHeaderToCategoryCode[header];
+                    if (categoryCode && values[index]) {
+                        const rankValueRaw = values[index];
+                        if (rankValueRaw !== '-' && !isNaN(parseInt(rankValueRaw, 10))) {
+                            data.push({
+                                "College": collegeName,
+                                "Course": courseName,
+                                "Category": categoryCode,
+                                "Last Rank 2024": parseInt(rankValueRaw, 10)
+                            });
+                        }
+                    }
+                });
+
+                if (specialCategoriesColIndex !== -1 && values[specialCategoriesColIndex]) {
+                    const specialCategoriesValue = values[specialCategoriesColIndex];
+                    if (specialCategoriesValue) {
+                        const specialCategories = specialCategoriesValue.split(',').map(s => s.trim()).filter(Boolean);
+                        specialCategories.forEach(sc => {
+                            const parts = sc.split(':');
+                            if (parts.length === 2 && !isNaN(parseInt(parts[1], 10))) {
+                                data.push({
+                                    "College": collegeName,
+                                    "Course": courseName,
+                                    "Category": parts[0].trim(),
+                                    "Last Rank 2024": parseInt(parts[1], 10)
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+            return data;
+        }
+
+        function populateCategories() {
+            studentCategorySelect.innerHTML = '<option value="">Select Category</option>';
+            const uniqueCategories = [...new Set(keamData.map(item => item.Category))];
+
+            uniqueCategories.sort((a, b) => {
+                const indexA = categoryOrder.indexOf(a);
+                const indexB = categoryOrder.indexOf(b);
+
+                if (indexA === -1 && indexB === -1) {
+                    return a.localeCompare(b);
+                }
+                if (indexA === -1) return 1;
+                if (indexB === -1) return -1;
+                return indexA - indexB;
+            });
+            
+            uniqueCategories.forEach(categoryCode => {
+                const option = document.createElement('option');
+                option.value = categoryCode;
+                option.textContent = categoryNames[categoryCode] || categoryCode; 
+                studentCategorySelect.appendChild(option);
+            });
+        }
+
+        function populateBranches() {
+            // Clear existing content except the search input
+            const existingSearchInput = branchDropdownContent.querySelector('.search-input');
+            branchDropdownContent.innerHTML = '';
+            branchDropdownContent.appendChild(existingSearchInput); // Re-add search input
+
+            const uniqueBranches = [...new Set(keamData.map(item => item.Course))].sort();
+
+            if (uniqueBranches.length === 0) {
+                const noBranchesDiv = document.createElement('div');
+                noBranchesDiv.className = 'p-2 text-gray-500';
+                noBranchesDiv.textContent = 'No branches found.';
+                branchDropdownContent.appendChild(noBranchesDiv);
+                return;
+            }
+
+            uniqueBranches.forEach(branch => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-dropdown-item branch-item'; // Add class for filtering
+                itemDiv.innerHTML = `
+                    <input type="checkbox" id="branch-${branch.replace(/\s/g, '_')}" value="${branch}">
+                    <label for="branch-${branch.replace(/\s/g, '_')}">${branch}</label>
+                `;
+                branchDropdownContent.appendChild(itemDiv);
+            });
+        }
+
+        function populateCollegesFilter(dataToFilter) {
+            // Clear existing content except the search input
+            const existingSearchInput = collegeFilterContent.querySelector('.search-input');
+            collegeFilterContent.innerHTML = '';
+            collegeFilterContent.appendChild(existingSearchInput); // Re-add search input
+
+            const uniqueColleges = [...new Set(dataToFilter.map(item => item.College))].sort();
+
+            if (uniqueColleges.length === 0) {
+                const noCollegesDiv = document.createElement('div');
+                noCollegesDiv.className = 'p-2 text-gray-500';
+                noCollegesDiv.textContent = 'No colleges available for filtering.';
+                collegeFilterContent.appendChild(noCollegesDiv);
+                return;
+            }
+
+            uniqueColleges.forEach(college => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'custom-dropdown-item college-item'; // Add class for filtering
+                itemDiv.innerHTML = `
+                    <input type="checkbox" id="college-${college.replace(/\s/g, '_').replace(/[^\w-]/g, '')}" value="${college}">
+                    <label for="college-${college.replace(/\s/g, '_').replace(/[^\w-]/g, '')}">${college}</label>
+                `;
+                collegeFilterContent.appendChild(itemDiv);
+            });
+        }
+
+        // Search functionality for Branch Dropdown
+        branchSearchInput.addEventListener('keyup', () => {
+            const searchTerm = branchSearchInput.value.toLowerCase();
+            branchDropdownContent.querySelectorAll('.branch-item').forEach(item => {
+                const label = item.querySelector('label').textContent.toLowerCase();
+                if (label.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Search functionality for College Filter Dropdown
+        collegeSearchInput.addEventListener('keyup', () => {
+            const searchTerm = collegeSearchInput.value.toLowerCase();
+            collegeFilterContent.querySelectorAll('.college-item').forEach(item => {
+                const label = item.querySelector('label').textContent.toLowerCase();
+                if (label.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Dropdown open/close and search (delegated)
+        [[branchDropdownButton, branchDropdownContent, branchSearchInput, 'branch'], [collegeFilterButton, collegeFilterContent, collegeSearchInput, 'college']].forEach(([btn, content, search, type]) => {
+            btn.addEventListener('click', e => { content.classList.toggle('show'); if(content.classList.contains('show')) search.focus(); });
+            search.addEventListener('keyup', () => filterDropdown(content, type, search.value.toLowerCase()));
+        });
+        window.addEventListener('click', e => {
+            if (!document.getElementById('branchDropdown').contains(e.target)) branchDropdownContent.classList.remove('show');
+            if (!document.getElementById('collegeFilterDropdown').contains(e.target)) collegeFilterContent.classList.remove('show');
+        });
+        // Update button text on page load (in case of pre-checked)
+        updateDropdownButtonText('branch');
+        updateDropdownButtonText('college');
+
+        function populateDropdown(content, items, type) {
+            const search = content.querySelector('.search-input');
+            content.innerHTML = '';
+            content.appendChild(search);
+            if(!items.length){
+                content.innerHTML += `<div class="p-2 text-gray-500">No ${type==='branch'?'branches':'colleges'} found.</div>`;
+                return;
+            }
+            items.forEach(item=>{
+                const id = `${type}-${item.replace(/\s/g,'_').replace(/[^\w-]/g,'')}`;
+                content.innerHTML += `<div class="custom-dropdown-item ${type}-item"><input type="checkbox" id="${id}" value="${item}"><label for="${id}" class="ml-2">${item}</label></div>`;
+            });
+        }
+
+        function updateDropdownButtonText(type) {
+            let content, button, defaultText;
+            if (type === 'branch') {
+                content = branchDropdownContent;
+                button = branchDropdownButton;
+                defaultText = 'Select Branches (Leave unchecked for no specific preference)';
+            } else {
+                content = collegeFilterContent;
+                button = collegeFilterButton;
+                defaultText = 'Select Colleges (Leave unchecked for all colleges)';
+            }
+            const checked = Array.from(content.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+            let text = defaultText;
+            if (checked.length === 1) text = checked[0];
+            else if (checked.length === 2) text = checked.join(', ');
+            else if (checked.length > 2) text = `${checked.length} selected`;
+            button.querySelector('span').textContent = text;
+        }
+
+        predictButton.addEventListener('click', () => {
+            const predictedRank = parseInt(predictedRankInput.value);
+            const selectedCategory = studentCategorySelect.value;
+
+            const selectedBranchCheckboxes = Array.from(branchDropdownContent.querySelectorAll('input[type="checkbox"]:checked'));
+            const selectedBranches = selectedBranchCheckboxes.map(checkbox => checkbox.value);
+
+            const selectedCollegeCheckboxes = Array.from(collegeFilterContent.querySelectorAll('input[type="checkbox"]:checked'));
+            const selectedColleges = selectedCollegeCheckboxes.map(checkbox => checkbox.value);
+
+
+            if (isNaN(predictedRank) || predictedRank <= 0) {
+                resultsDiv.innerHTML = '<p class="text-red-600 text-center">Please enter a valid predicted rank (a positive number).</p>';
+                return;
+            }
+            if (!selectedCategory) {
+                resultsDiv.innerHTML = '<p class="text-red-600 text-center">Please select a student category.</p>';
+                return;
+            }
+
+            let relevantColleges = keamData.filter(college => {
+                // Apply college filter first if any colleges are selected
+                const isCollegeSelected = selectedColleges.length === 0 || selectedColleges.includes(college.College);
+                return isCollegeSelected && (college.Category === selectedCategory) && predictedRank <= college['Last Rank 2024'];
+            });
+
+            if (selectedCategory !== "SM") {
+                const smResults = keamData.filter(college => {
+                    const isCollegeSelected = selectedColleges.length === 0 || selectedColleges.includes(college.College);
+                    return isCollegeSelected && (college.Category === "SM") && predictedRank <= college['Last Rank 2024'];
+                });
+                relevantColleges = relevantColleges.concat(smResults);
+            }
+
+            if (selectedBranches.length > 0) {
+                relevantColleges = relevantColleges.filter(college => selectedBranches.includes(college.Course));
+            }
+
+            const finalResultsMap = new Map();
+
+            for (const collegeEntry of relevantColleges) {
+                const key = `${collegeEntry.College}|${collegeEntry.Course}`;
+                if (!finalResultsMap.has(key)) {
+                    finalResultsMap.set(key, collegeEntry);
+                } else {
+                    const existingEntry = finalResultsMap.get(key);
+                    if (collegeEntry.Category === "SM" && existingEntry.Category !== "SM") {
+                        finalResultsMap.set(key, collegeEntry);
+                    } else if (collegeEntry.Category === existingEntry.Category && collegeEntry['Last Rank 2024'] < existingEntry['Last Rank 2024']) {
+                         finalResultsMap.set(key, collegeEntry);
+                    }
+                }
+            }
+
+            const finalColleges = Array.from(finalResultsMap.values());
+            displayResults(finalColleges);
+        });
+
+        function displayResults(colleges) {
+            if (!colleges.length) return resultsDiv.innerHTML = '<p class="text-gray-500 dark:text-blue-200 text-center">No colleges or courses found for your selected criteria.</p>';
+            colleges.sort((a,b)=>a['Last Rank 2024']-b['Last Rank 2024']||a.College.localeCompare(b.College)||a.Course.localeCompare(b.Course));
+            const grouped = colleges.reduce((acc,c)=>(acc[c.College]=acc[c.College]||[],acc[c.College].push(c),acc),{});
+            resultsDiv.innerHTML = Object.entries(grouped).map(([college,arr])=>`
+              <div class="mb-4 p-4 bg-white/90 dark:bg-[#232946] rounded-lg shadow-md border border-blue-100 dark:border-[#334155] transition hover:scale-105 hover:shadow-xl duration-200">
+                <h3 class="text-lg font-bold text-blue-700 dark:text-blue-100 mb-2">${college}</h3>
+                <ul class="space-y-2">
+                  ${arr.map(course=>`
+                    <li class="flex items-center justify-between gap-2 flex-wrap">
+                      <div class="flex flex-col min-w-0">
+                        <span class="font-semibold text-gray-800 dark:text-blue-100 text-base leading-tight truncate">${cleanCourseName(course.Course)}</span>
+                        <span class="text-xs italic text-gray-500 dark:text-blue-200 leading-tight">Category: ${categoryNames[course.Category]||course.Category}</span>
+                      </div>
+                      <span class="flex-shrink-0 inline-flex items-center justify-center bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200 font-bold rounded-full px-5 py-1.5 text-base shadow-sm border border-blue-200 dark:border-blue-800" style="min-width: 90px; text-align: center;">Cutoff:<br><span class='text-lg font-extrabold tracking-wide'>${course['Last Rank 2024']}</span></span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+            `).join('');
+        }
+
+        // Helper to remove abbreviation before colon in course name
+        function cleanCourseName(name) {
+            return name.includes(':') ? name.split(':').slice(1).join(':').trim() : name;
+        }
+
+        fetchKeamData();
+
+        // Attach event listeners ONCE after dropdowns are first populated
+        branchDropdownContent.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'checkbox') {
+                updateDropdownButtonText('branch');
+            }
+        });
+        collegeFilterContent.addEventListener('change', function(e) {
+            if (e.target && e.target.type === 'checkbox') {
+                updateDropdownButtonText('college');
+            }
+        });
+
+        // Minimal dark/light mode toggle logic with dual icon crossfade
+        const themeToggle = document.getElementById('themeToggle');
+        function setTheme(mode) {
+            if (mode === 'dark') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        (function() {
+            let mode = localStorage.getItem('theme');
+            if (!mode) {
+                mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            setTheme(mode);
+        })();
+        themeToggle.addEventListener('click', function() {
+            const isDark = document.documentElement.classList.contains('dark');
+            setTheme(isDark ? 'light' : 'dark');
+        });
+
+        // Fetch user location and display in #userLocation
+        fetch('https://ipapi.co/json/')
+          .then(res => res.json())
+          .then(data => {
+            const loc = document.getElementById('userLocation');
+            if (data && (data.city || data.country_name)) {
+              loc.textContent = `Your location: ${data.city ? data.city + ', ' : ''}${data.country_name}`;
+            }
+          })
+          .catch(() => {});
+
+        // --- Device type detection (no prompt) ---
+        function isMobileDevice() {
+          return /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+        }
+        document.body.classList.toggle('mobile-ui', isMobileDevice());
+        // --- Language selector logic ---
+        const langSelect = document.getElementById('langSelect');
+        const translations = {
+          en: {
+            title: 'KEAM College Predictor 2025',
+            subtitle: 'Enter your predicted KEAM rank and select your category to find eligible colleges and courses based on 2024 cutoffs.',
+            predictedRank: 'Predicted Rank:',
+            studentCategory: 'Student Category:',
+            preferredBranches: 'Preferred Branches:',
+            filterColleges: 'Filter Colleges:',
+            selectBranches: 'Select Branches (Leave unchecked for no specific preference)',
+            selectColleges: 'Select Colleges (Leave unchecked for all colleges)',
+            predictColleges: 'Predict Colleges',
+            disclaimer: 'This site uses last year\'s KEAM cutoffs for predictions. Actual cutoffs may vary. Use this tool for guidance only, not as a guarantee of admission.',
+            about: 'About This Site',
+            aboutDesc: 'KEAM College Predictor 2025 helps you estimate eligible colleges and courses based on your predicted KEAM rank and category, using the latest available cutoff data.',
+            aboutDisclaimer: 'This site uses last year\'s KEAM cutoffs for predictions. Actual cutoffs may vary. Use this tool for guidance only, not as a guarantee of admission.',
+            yourLocation: 'Your Location:',
+            dataSource: 'This site uses official KEAM 2024 cutoff data published by the CEE, Kerala. Data source:',
+            loadingBranches: 'Loading Branches...',
+            loadingColleges: 'Loading Colleges...',
+            noBranches: 'No branches found.',
+            noColleges: 'No colleges available for filtering.',
+            searchBranches: 'Search branches...',
+            searchColleges: 'Search colleges...',
+            selectCategory: 'Select Category',
+            errorRank: 'Please enter a valid predicted rank (a positive number).',
+            errorCategory: 'Please select a student category.',
+            noResults: 'No colleges or courses found for your selected criteria.',
+            resultsPlaceholder: 'Your predicted colleges and courses will appear here.'
+          },
+          ml: {
+            title: 'KEAM കോളേജ് പ്രവചകൻ 2025',
+            subtitle: '2024 ലെ കട്ട്‌ഓഫ് അടിസ്ഥാനമാക്കി യോഗ്യമായ കോളേജുകളും കോഴ്സുകളും കണ്ടെത്താൻ നിങ്ങളുടെ പ്രവചിച്ച റാങ്കും വിഭാഗവും തിരഞ്ഞെടുക്കുക.',
+            predictedRank: 'പ്രവചിച്ച റാങ്ക്:',
+            studentCategory: 'വിദ്യാർത്ഥി വിഭാഗം:',
+            preferredBranches: 'ഇഷ്ടപ്പെട്ട ബ്രാഞ്ചുകൾ:',
+            filterColleges: 'കോളേജുകൾ ഫിൽറ്റർ ചെയ്യുക:',
+            selectBranches: 'ബ്രാഞ്ചുകൾ തിരഞ്ഞെടുക്കുക (പ്രത്യേക ഇഷ്ടം ഇല്ലെങ്കിൽ ഒഴിവാക്കാം)',
+            selectColleges: 'കോളേജുകൾ തിരഞ്ഞെടുക്കുക (എല്ലാ കോളേജുകളും കാണാൻ ഒഴിവാക്കാം)',
+            predictColleges: 'കോളേജുകൾ പ്രവചിക്കുക',
+            disclaimer: 'ഈ സൈറ്റ് കഴിഞ്ഞ വർഷത്തെ KEAM കട്ട്‌ഓഫ് ഉപയോഗിക്കുന്നു. യഥാർത്ഥ കട്ട്‌ഓഫ് വ്യത്യാസപ്പെടാം. ഇത് ഒരു മാർഗ്ഗനിർദ്ദേശം മാത്രമാണ്.',
+            about: 'ഈ സൈറ്റിനെ കുറിച്ച്',
+            aboutDesc: 'KEAM കോളേജ് പ്രവചകൻ 2025 നിങ്ങളുടെ പ്രവചിച്ച റാങ്ക്, വിഭാഗം എന്നിവയുടെ അടിസ്ഥാനത്തിൽ യോഗ്യമായ കോളേജുകളും കോഴ്സുകളും കണ്ടെത്താൻ സഹായിക്കുന്നു.',
+            aboutDisclaimer: 'ഈ സൈറ്റ് കഴിഞ്ഞ വർഷത്തെ KEAM കട്ട്‌ഓഫ് ഉപയോഗിക്കുന്നു. യഥാർത്ഥ കട്ട്‌ഓഫ് വ്യത്യാസപ്പെടാം. ഇത് ഒരു മാർഗ്ഗനിർദ്ദേശം മാത്രമാണ്.',
+            yourLocation: 'നിങ്ങളുടെ സ്ഥാനം:',
+            dataSource: 'ഈ സൈറ്റ് ഔദ്യോഗിക KEAM 2024 കട്ട്‌ഓഫ് ഡാറ്റയാണ് ഉപയോഗിക്കുന്നത്. ഡാറ്റാ ഉറവിടം:',
+            loadingBranches: 'ബ്രാഞ്ചുകൾ ലോഡുചെയ്യുന്നു...',
+            loadingColleges: 'കോളേജുകൾ ലോഡുചെയ്യുന്നു...',
+            noBranches: 'ബ്രാഞ്ചുകൾ ലഭ്യമല്ല.',
+            noColleges: 'ഫിൽറ്ററിംഗിനായി കോളേജുകൾ ലഭ്യമല്ല.',
+            searchBranches: 'ബ്രാഞ്ചുകൾ തിരയുക...',
+            searchColleges: 'കോളേജുകൾ തിരയുക...',
+            selectCategory: 'വിഭാഗം തിരഞ്ഞെടുക്കുക',
+            errorRank: 'ദയവായി ശരിയായ (ധനാത്മകമായ) പ്രവചിച്ച റാങ്ക് നൽകുക.',
+            errorCategory: 'ദയവായി വിദ്യാർത്ഥി വിഭാഗം തിരഞ്ഞെടുക്കുക.',
+            noResults: 'നിങ്ങളുടെ തിരഞ്ഞെടുക്കലുകൾക്ക് അനുയോജ്യമായ കോളേജുകളോ കോഴ്സുകളോ കണ്ടെത്തിയില്ല.',
+            resultsPlaceholder: 'നിങ്ങളുടെ പ്രവചിച്ച കോളേജുകളും കോഴ്സുകളും ഇവിടെ കാണിക്കും.'
+          },
+          hi: {
+            title: 'KEAM कॉलेज प्रेडिक्टर 2025',
+            subtitle: '2024 की कटऑफ के आधार पर योग्य कॉलेज और कोर्स खोजने के लिए अपनी अनुमानित रैंक और श्रेणी चुनें।',
+            predictedRank: 'अनुमानित रैंक:',
+            studentCategory: 'छात्र श्रेणी:',
+            preferredBranches: 'पसंदीदा ब्रांच:',
+            filterColleges: 'कॉलेज फ़िल्टर करें:',
+            selectBranches: 'ब्रांच चुनें (कोई विशेष पसंद नहीं तो खाली छोड़ें)',
+            selectColleges: 'कॉलेज चुनें (सभी कॉलेज देखने के लिए खाली छोड़ें)',
+            predictColleges: 'कॉलेज प्रेडिक्ट करें',
+            disclaimer: 'यह साइट पिछले वर्ष की KEAM कटऑफ का उपयोग करती है। वास्तविक कटऑफ अलग हो सकती है। यह केवल मार्गदर्शन के लिए है, प्रवेश की गारंटी नहीं।',
+            about: 'इस साइट के बारे में',
+            aboutDesc: 'KEAM कॉलेज प्रेडिक्टर 2025 आपकी अनुमानित रैंक और श्रेणी के आधार पर योग्य कॉलेज और कोर्स खोजने में मदद करता है।',
+            aboutDisclaimer: 'यह साइट पिछले वर्ष की KEAM कटऑफ का उपयोग करती है। वास्तविक कटऑफ अलग हो सकती है। यह केवल मार्गदर्शन के लिए है, प्रवेश की गारंटी नहीं।',
+            yourLocation: 'आपका स्थान:',
+            dataSource: 'यह साइट आधिकारिक KEAM 2024 कटऑफ डेटा का उपयोग करती है। डेटा स्रोत:',
+            loadingBranches: 'ब्रांच लोड हो रही हैं...',
+            loadingColleges: 'कॉलेज लोड हो रहे हैं...',
+            noBranches: 'कोई ब्रांच नहीं मिली।',
+            noColleges: 'फिल्टरिंग के लिए कोई कॉलेज उपलब्ध नहीं हैं।',
+            searchBranches: 'ब्रांच खोजें...',
+            searchColleges: 'कॉलेज खोजें...',
+            selectCategory: 'श्रेणी चुनें',
+            errorRank: 'कृपया एक मान्य (सकारात्मक) अनुमानित रैंक दर्ज करें।',
+            errorCategory: 'कृपया छात्र श्रेणी चुनें।',
+            noResults: 'आपकी चयनित शर्तों के लिए कोई कॉलेज या कोर्स नहीं मिला।',
+            resultsPlaceholder: 'आपके अनुमानित कॉलेज और कोर्स यहां दिखाई देंगे।'
+          }
+        };
+        function applyTranslation(lang) {
+          const t = translations[lang] || translations.en;
+          document.title = t.title;
+          const h1 = document.querySelector('h1');
+          if (h1) h1.textContent = t.title;
+          const subtitle = document.querySelector('p.font-medium');
+          if (subtitle) subtitle.textContent = t.subtitle;
+          const labelRank = document.querySelector('label[for="predictedRank"]');
+          if (labelRank) labelRank.textContent = t.predictedRank;
+          const labelCat = document.querySelector('label[for="studentCategory"]');
+          if (labelCat) labelCat.textContent = t.studentCategory;
+          const labelBranch = document.querySelector('label[for="branchDropdownButton"]');
+          if (labelBranch) labelBranch.textContent = t.preferredBranches;
+          const labelCollege = document.querySelector('label[for="collegeFilterButton"]');
+          if (labelCollege) labelCollege.textContent = t.filterColleges;
+          const branchBtn = document.getElementById('branchDropdownButton');
+          if (branchBtn) branchBtn.querySelector('span').textContent = t.selectBranches;
+          const collegeBtn = document.getElementById('collegeFilterButton');
+          if (collegeBtn) collegeBtn.querySelector('span').textContent = t.selectColleges;
+          const predictBtn = document.getElementById('predictButton');
+          if (predictBtn) predictBtn.textContent = t.predictColleges;
+          // Modal
+          const aboutModal = document.getElementById('aboutInfoModal');
+          if (aboutModal) {
+            const h2 = aboutModal.querySelector('h2');
+            if (h2) h2.textContent = t.about;
+            const ps = aboutModal.querySelectorAll('.space-y-3 p');
+            if (ps[0]) ps[0].textContent = t.aboutDesc;
+            if (ps[1]) ps[1].textContent = t.aboutDisclaimer;
+            if (ps[2]) ps[2].querySelector('strong').textContent = t.yourLocation;
+            if (ps[3]) ps[3].childNodes[0].textContent = t.dataSource + ' ';
+          }
+          // Dropdown placeholders and loading
+          const branchSearch = document.querySelector('#branchDropdownContent .search-input');
+          if (branchSearch) branchSearch.placeholder = t.searchBranches;
+          const collegeSearch = document.querySelector('#collegeFilterContent .search-input');
+          if (collegeSearch) collegeSearch.placeholder = t.searchColleges;
+          // Loading and empty states
+          const branchLoading = document.querySelector('#branchDropdownContent .p-2');
+          if (branchLoading) branchLoading.textContent = t.loadingBranches;
+          const collegeLoading = document.querySelector('#collegeFilterContent .p-2');
+          if (collegeLoading) collegeLoading.textContent = t.loadingColleges;
+          // Category select placeholder
+          const catSelect = document.getElementById('studentCategory');
+          if (catSelect) catSelect.options[0].textContent = t.selectCategory;
+          // Results placeholder
+          const resultsDiv = document.getElementById('results');
+          if (resultsDiv && resultsDiv.children.length === 1) {
+            resultsDiv.children[0].textContent = t.resultsPlaceholder;
+          }
+        }
+        langSelect.addEventListener('change', function() {
+          localStorage.setItem('lang', langSelect.value);
+          applyTranslation(langSelect.value);
+        });
+        // On load, set language
+        const savedLang = localStorage.getItem('lang') || 'en';
+        langSelect.value = savedLang;
+        applyTranslation(savedLang);
+        // --- Fix language selector visibility ---
+        langSelect.style.color = '#222';
+        langSelect.style.background = 'white';
+        langSelect.style.opacity = '1';
+        langSelect.style.pointerEvents = 'auto';
+    </script>
+</body>
+</html>

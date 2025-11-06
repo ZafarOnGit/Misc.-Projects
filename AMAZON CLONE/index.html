@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Heaven</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white shadow-md p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-800">
+                <span class="text-blue-600">PC</span> Heaven
+            </h1>
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">PC Parts</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Laptops</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Peripherals</a>
+                <a href="#" class="text-gray-600 hover:text-blue-600 font-medium transition-colors">Pre-Built PCs</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="flex items-center text-gray-600 hover:text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.182 1.953.693 2.578A6.745 6.745 0 0017 19a6.745 6.745 0 001.693-.292c.875-.625 1.323-1.948.693-2.578L17 13m-6-13a6.75 6.75 0 100 13.5 6.75 6.75 0 100-13.5zm0 0a6.75 6.75 0 100 13.5 6.75 6.75 0 100-13.5z" />
+                    </svg>
+                    <span class="ml-1 text-sm font-semibold hidden md:block">Cart (0)</span>
+                </button>
+                <div class="md:hidden">
+                    <button id="menu-btn" class="text-gray-600 hover:text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden mt-2 border-t pt-2">
+            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-blue-100 rounded-md">PC Parts</a>
+            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-blue-100 rounded-md">Laptops</a>
+            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-blue-100 rounded-md">Peripherals</a>
+            <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-blue-100 rounded-md">Pre-Built PCs</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 flex-grow">
+        <!-- Hero Section -->
+        <section class="bg-blue-600 text-white rounded-xl shadow-lg p-8 mb-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold mb-2">Build Your Dream PC</h2>
+            <p class="text-lg md:text-xl mb-6">Explore the latest and greatest in PC components, peripherals, and gaming laptops.</p>
+            <button class="bg-white text-blue-600 hover:bg-blue-100 font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:scale-105">Shop Now</button>
+        </section>
+
+        <!-- Product Grid -->
+        <section>
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Featured Products</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <!-- Product Card 1: GPU -->
+                <div class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                    <img src="https://placehold.co/300x200/3498db/ffffff?text=RTX+4080+Super" alt="NVIDIA GeForce RTX 4080 Super" class="rounded-lg mb-4 h-48 w-full object-cover">
+                    <h3 class="text-xl font-semibold mb-2">NVIDIA GeForce RTX 4080 Super</h3>
+                    <p class="text-gray-500 mb-4">Graphics Card</p>
+                    <span class="text-2xl font-bold text-blue-600 mb-4">$1,199.99</span>
+                    <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors" onclick="addToCart('NVIDIA GeForce RTX 4080 Super')">Add to Cart</button>
+                </div>
+
+                <!-- Product Card 2: CPU -->
+                <div class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                    <img src="https://placehold.co/300x200/2ecc71/ffffff?text=Intel+Core+i9" alt="Intel Core i9-14900K" class="rounded-lg mb-4 h-48 w-full object-cover">
+                    <h3 class="text-xl font-semibold mb-2">Intel Core i9-14900K</h3>
+                    <p class="text-gray-500 mb-4">Processor</p>
+                    <span class="text-2xl font-bold text-blue-600 mb-4">$599.99</span>
+                    <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors" onclick="addToCart('Intel Core i9-14900K')">Add to Cart</button>
+                </div>
+
+                <!-- Product Card 3: Laptop -->
+                <div class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                    <img src="https://placehold.co/300x200/9b59b6/ffffff?text=Razer+Blade+16" alt="Razer Blade 16 (2024)" class="rounded-lg mb-4 h-48 w-full object-cover">
+                    <h3 class="text-xl font-semibold mb-2">Razer Blade 16 (2024)</h3>
+                    <p class="text-gray-500 mb-4">Gaming Laptop</p>
+                    <span class="text-2xl font-bold text-blue-600 mb-4">$3,499.99</span>
+                    <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors" onclick="addToCart('Razer Blade 16 (2024)')">Add to Cart</button>
+                </div>
+
+                <!-- Product Card 4: Monitor -->
+                <div class="bg-white rounded-xl shadow-md p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105">
+                    <img src="https://placehold.co/300x200/f1c40f/333333?text=LG+OLED+Monitor" alt="LG UltraGear OLED 27GR95QE-B" class="rounded-lg mb-4 h-48 w-full object-cover">
+                    <h3 class="text-xl font-semibold mb-2">LG UltraGear OLED 27GR95QE-B</h3>
+                    <p class="text-gray-500 mb-4">Gaming Monitor</p>
+                    <span class="text-2xl font-bold text-blue-600 mb-4">$799.99</span>
+                    <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition-colors" onclick="addToCart('LG UltraGear OLED 27GR95QE-B')">Add to Cart</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Amazon Clone</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    background: #f2f2f2;
+                }
+                header {
+                    background: #232f3e;
+                    color: #fff;
+                    padding: 20px 0;
+                    text-align: center;
+                }
+                nav {
+                    background: #131921;
+                    padding: 10px 0;
+                    text-align: center;
+                }
+                nav a {
+                    color: #fff;
+                    margin: 0 15px;
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+                .container {
+                    max-width: 1200px;
+                    margin: 30px auto;
+                    padding: 20px;
+                    background: #fff;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                .featured {
+                    display: flex;
+                    gap: 20px;
+                    margin-bottom: 40px;
+                }
+                .featured img {
+                    width: 100%;
+                    max-width: 400px;
+                    border-radius: 8px;
+                }
+                .categories {
+                    display: flex;
+                    gap: 20px;
+                    margin-bottom: 40px;
+                }
+                .category {
+                    flex: 1;
+                    background: #e3e6e6;
+                    padding: 20px;
+                    border-radius: 8px;
+                    text-align: center;
+                }
+                .products {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                    gap: 20px;
+                }
+                .product-card {
+                    background: #fafafa;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    padding: 16px;
+                    text-align: center;
+                    transition: box-shadow 0.2s;
+                }
+                .product-card:hover {
+                    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+                }
+                .product-card img {
+                    width: 100px;
+                    height: 100px;
+                    object-fit: contain;
+                    margin-bottom: 10px;
+                }
+                .product-title {
+                    font-size: 1.1em;
+                    margin-bottom: 8px;
+                }
+                .product-price {
+                    color: #b12704;
+                    font-weight: bold;
+                    margin-bottom: 8px;
+                }
+                footer {
+                    background: #232f3e;
+                    color: #fff;
+                    text-align: center;
+                    padding: 16px 0;
+                    margin-top: 40px;
+                }
+        // Modal functions (since I can't use alert)
+        function showModal(message) {
+            const modal = document.getElementById('cart-modal');
+            const modalText = document.getElementById('modal-text');
+            modalText.textContent = message;
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.add('hidden');
+        }
+
+        // Add to cart function
+        function addToCart(productName) {
+            showModal(`'${productName}' has been added to your cart.`);
+        }
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>

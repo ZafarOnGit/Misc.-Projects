@@ -1,0 +1,126 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f9fb;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #4f8cff;
+  color: #fff;
+  padding: 2rem 1rem 1rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.2rem;
+}
+header p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+}
+section h2 {
+  margin-top: 0;
+  font-size: 1.3rem;
+  color: #4f8cff;
+}
+#video-section video {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: block;
+  margin: 1rem auto;
+  background: #222;
+}
+#face-emotion-results, #voice-emotion-results {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  min-height: 2.5rem;
+  text-align: center;
+}
+#mic-status {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+.mic-icon {
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+#privacy-controls label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+#privacy-controls button {
+  margin-top: 0.5rem;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#privacy-controls button:hover {
+  background: #2563eb;
+}
+#mood-history {
+  text-align: center;
+}
+#mood-chart {
+  margin: 1rem auto;
+  display: block;
+  background: #e9eef6;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+footer {
+  background: #f1f5fa;
+  color: #888;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.95rem;
+  border-top: 1px solid #e3e8f0;
+}
+footer button {
+  margin-top: 0.5rem;
+  background: #4f8cff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+footer button:hover {
+  background: #2563eb;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 0 0.2rem;
+  }
+  section {
+    padding: 1rem 0.5rem;
+  }
+  #video-section video {
+    max-width: 100%;
+  }
+} 

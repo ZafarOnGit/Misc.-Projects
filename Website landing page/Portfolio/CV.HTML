@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mohamed Zafar - Curriculum Vitae</title>
+    <meta name="description" content="Curriculum Vitae of Mohamed Zafar: web development projects, education, leadership, and skills.">
+    <meta name="keywords" content="Mohamed Zafar, CV, resume, web developer, projects, education, skills">
+    <meta name="theme-color" content="#0ea5e9">
+    <link rel="canonical" href="/">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Mohamed Zafar - Curriculum Vitae">
+    <meta property="og:description" content="Web development portfolio, education, leadership, and skills.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Mohamed Zafar - Curriculum Vitae">
+    <meta name="twitter:description" content="Web development portfolio, education, leadership, and skills.">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind config needs to be defined before the CDN script -->
+    <script>
+        tailwind = window.tailwind || {};
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Cantarell", "Helvetica Neue", "Arial", "sans-serif"],
+                        display: ["DM Sans", "Inter", "system-ui", "Arial", "sans-serif"]
+                    },
+                    colors: {
+                        border: 'hsl(214, 32%, 91%)',
+                        input: 'hsl(214, 32%, 91%)',
+                        ring: 'hsl(215, 20%, 65%)',
+                        background: 'hsl(0, 0%, 100%)',
+                        foreground: 'hsl(222, 47%, 11%)',
+                        primary: {
+                            DEFAULT: 'hsl(221, 83%, 53%)',
+                            foreground: 'hsl(0, 0%, 100%)'
+                        },
+                        secondary: {
+                            DEFAULT: 'hsl(210, 40%, 96%)',
+                            foreground: 'hsl(222, 47%, 11%)'
+                        }
+                    },
+                    boxShadow: {
+                        'elevated': '0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)'
+                    },
+                    animation: {
+                        'in': 'fadeInUp 600ms ease-out both'
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(12px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif; /* A modern, clean sans-serif font */
+            -webkit-print-color-adjust: exact; /* For printing backgrounds/colors */
+            print-color-adjust: exact;
+            background-color: #fafafa; /* Slightly brighter for contrast */
+            line-height: 1.8; /* Improve readability */
+            font-size: 17px; /* Larger base size for readability */
+        }
+        /* Basic styling for the CV container for better print/view */
+        .cv-container {
+            max-width: 210mm; /* A4 width */
+            min-height: 297mm; /* A4 height */
+            margin: 20mm auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px 40px; /* Internal padding */
+            line-height: 1.5;
+        }
+        h1, h2, h3 {
+            font-family: 'DM Sans', 'Inter', sans-serif; /* High-legibility headings */
+            color: inherit; /* Respect theme (light/dark) */
+        }
+        h1 {
+            font-size: 2.5rem; /* Larger for name */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+        h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 2px solid #e0e0e0; /* Subtle line under section titles */
+            padding-bottom: 5px;
+        }
+        ul {
+            list-style: none; /* Remove default bullet points */
+            padding-left: 0;
+        }
+        ul li {
+            position: relative;
+            padding-left: 1.5em; /* Space for custom bullet */
+            margin-bottom: 0.5em;
+        }
+        ul li::before {
+            content: '•'; /* Custom bullet point */
+            color: #3498db; /* Blue color for bullets */
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1.5em;
+            position: absolute;
+            left: 0;
+        }
+        .contact-info a {
+            color: #2563eb; /* Improved contrast */
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+        .text-detail {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* Typographic defaults for readability */
+        .cv-container p,
+        .cv-container li {
+            color: #374151; /* gray-700 */
+            font-size: 1.05rem;
+        }
+        .dark .cv-container p,
+        .dark .cv-container li {
+            color: #e5e7eb; /* gray-200 */
+        }
+        .dark h3 {
+            border-bottom-color: #3f3f46; /* zinc-700 for contrast */
+        }
+        .dark .cv-container .border-gray-200 {
+            border-color: #3f3f46 !important; /* improve dark border contrast */
+        }
+        .dark .contact-info a {
+            color: #60a5fa; /* brighter link in dark mode */
+            text-decoration: underline;
+        }
+
+        /* Print specific adjustments */
+        @media print {
+            body {
+                background-color: #fff;
+            }
+            .cv-container {
+                box-shadow: none;
+                margin: 0;
+                width: 100%;
+                max-width: none;
+                min-height: auto;
+                padding: 0;
+            }
+            h1 {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            h3 {
+                border-bottom-color: #ccc;
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            ul li::before {
+                color: #3498db; /* Ensure blue bullets print */
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-neutral-950 transition-colors duration-300">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 rounded-md bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm border border-gray-200 dark:border-neutral-800 shadow">Skip to content</a>
+    <!-- Top bar -->
+    <header class="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-neutral-900/60 border-b border-gray-200 dark:border-neutral-800" role="banner">
+        <div class="mx-auto max-w-5xl px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="h-9 w-9 rounded-full bg-primary/10 text-primary grid place-items-center font-bold">MZ</div>
+                <div class="text-sm sm:text-base font-semibold text-gray-800 dark:text-gray-100">Mohamed Zafar</div>
+            </div>
+            <div class="flex items-center gap-2">
+                <button id="printBtn" class="inline-flex items-center gap-2 rounded-md border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
+                        <path d="M6 7V3h12v4H6zm0 10h12v4H6v-4zm12-2H6V9h12v6zm3-6h-2V7a2 2 0 00-2-2h-1V2H8v3H7a2 2 0 00-2 2v2H3a2 2 0 00-2 2v4h3v5h16v-5h3v-4a2 2 0 00-2-2z" />
+                    </svg>
+                    Print
+                </button>
+                <button id="themeToggle" class="inline-flex items-center gap-2 rounded-md border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50" aria-label="Toggle theme">
+                    <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 hidden dark:inline">
+                        <path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.8 1.42-1.42zM1 13h3v-2H1v2zm10 10h2v-3h-2v3zm9.66-18.95l-1.41-1.41-1.8 1.79 1.42 1.42 1.79-1.8zM20 13h3v-2h-3v2zM6.76 19.16l-1.79 1.8 1.41 1.41 1.8-1.79-1.42-1.42zM17.24 19.16l1.42 1.42 1.79-1.8-1.41-1.41-1.8 1.79zM12 7a5 5 0 100 10A5 5 0 0012 7z" />
+                    </svg>
+                    <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 dark:hidden">
+                        <path d="M12.74 2.01a1 1 0 01.99 1.28A8 8 0 1020.7 10.27a1 1 0 011.28-.99A10 10 0 1112.74 2.01z" />
+                    </svg>
+                    Theme
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content" class="cv-container bg-white dark:bg-neutral-900 shadow-lg rounded-lg p-10 border border-gray-200 dark:border-neutral-800" role="main">
+        <div class="text-center pb-6 animate-in">
+            <h1 class="text-5xl font-extrabold text-gray-800 dark:text-gray-100 tracking-tight">Mohamed Zafar</h1>
+            <p class="contact-info text-md text-gray-600 dark:text-gray-300 mt-2">
+                <a href="tel:+971505607816" class="hover:underline">+971 505607816</a> <span class="mx-2">|</span> <a href="mailto:zafaer213133@gmail.com" class="hover:underline">zafaer213133@gmail.com</a>
+            </p>
+            <div class="mt-3 flex items-center justify-center gap-2">
+                <span class="inline-flex items-center rounded-full border border-gray-200 dark:border-neutral-800 bg-secondary px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:text-gray-200">Open to opportunities</span>
+                <span class="inline-flex items-center rounded-full border border-gray-200 dark:border-neutral-800 bg-secondary px-2.5 py-0.5 text-xs font-medium text-gray-700 dark:text-gray-200">Web Development</span>
+            </div>
+        </div>
+
+        <!-- Accordion: Objective -->
+        <div class="mb-6 rounded-lg border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm">
+            <button class="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 accordion-trigger" data-target="#objective" aria-controls="objective" aria-expanded="false">
+                <span class="text-xl font-semibold text-gray-800 dark:text-gray-100">Objective</span>
+                <svg class="h-5 w-5 text-gray-500 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div id="objective" class="px-4 pb-4 hidden" role="region" aria-labelledby="objective-label">
+                <p class="text-detail text-gray-700 dark:text-gray-300 mt-2">
+                    Highly motivated and technically-inclined recent high school graduate with a strong academic record and a passion for programming. Eager to apply problem-solving skills and leadership experience to a challenging opportunity in the technology sector.
+                </p>
+            </div>
+        </div>
+
+        <!-- Education Card -->
+        <div class="mb-6 rounded-lg border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm">
+            <div class="px-4 py-3 border-b border-gray-200 dark:border-neutral-800">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Education</h3>
+            </div>
+            <div class="p-4">
+                <div class="relative pl-6 before:content-[''] before:absolute before:left-2 before:top-1 before:bottom-1 before:w-px before:bg-gray-200 dark:before:bg-neutral-700">
+                    <div class="mb-4 animate-in">
+                        <div class="flex items-center gap-2">
+                            <div class="h-3 w-3 rounded-full bg-primary"></div>
+                            <p class="font-medium text-gray-800 dark:text-gray-100">St. Mary's Catholic High School, Fujairah, UAE</p>
+                        </div>
+                        <div class="ml-5 mt-2">
+                            <p class="font-normal text-gray-700 dark:text-gray-300">Completed 12th Standard CBSE Curriculum, 2024</p>
+                            <div class="mt-1 flex items-center gap-3">
+                                <span class="inline-flex items-center rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">87.13%</span>
+                                <div class="flex-1 h-2 rounded-full bg-gray-200 dark:bg-neutral-700 overflow-hidden">
+                                    <div class="h-2 bg-primary rounded-full" style="width: 87.13%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animate-in">
+                        <div class="flex items-center gap-2">
+                            <div class="h-3 w-3 rounded-full bg-primary"></div>
+                            <p class="font-medium text-gray-800 dark:text-gray-100">St. Mary's Catholic High School, Fujairah, UAE</p>
+                        </div>
+                        <div class="ml-5 mt-2">
+                            <p class="font-normal text-gray-700 dark:text-gray-300">Completed 10th Standard CBSE Curriculum, 2022</p>
+                            <div class="mt-1 flex items-center gap-3">
+                                <span class="inline-flex items-center rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary ring-1 ring-inset ring-primary/20">89%</span>
+                                <div class="flex-1 h-2 rounded-full bg-gray-200 dark:bg-neutral-700 overflow-hidden">
+                                    <div class="h-2 bg-primary rounded-full" style="width: 89%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Card -->
+        <div class="mb-6 rounded-lg border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm">
+            <div class="px-4 py-3 border-b border-gray-200 dark:border-neutral-700 flex items-center justify-between">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Projects</h3>
+                <a href="https://site-fyw8qgty4.godaddysites.com/" target="_blank" class="inline-flex items-center gap-2 rounded-md border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50">
+                    Visit Live Site
+                </a>
+            </div>
+            <div class="p-4 grid sm:grid-cols-2 gap-4">
+                <div class="rounded-lg border border-gray-200 dark:border-neutral-700 p-4 hover:shadow-elevated transition-shadow duration-200">
+                    <p class="font-medium text-gray-800 dark:text-gray-100">College Entrance Predictor Website</p>
+                    <ul class="ml-4 mt-2 text-gray-700 dark:text-gray-300">
+                        <li>Designed a tool to predict admissions for the KEAM entrance exam.</li>
+                        <li>Demonstrates programming, problem-solving, and real-world application skills.</li>
+                    </ul>
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">HTML</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">Tailwind</span>
+                        <span class="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary ring-1 ring-primary/20">Python</span>
+                    </div>
+                </div>
+                <div class="rounded-lg border border-gray-200 dark:border-neutral-700 p-4 flex items-center justify-center text-sm text-gray-500 dark:text-gray-400">
+                    More projects coming soon
+                </div>
+            </div>
+        </div>
+
+        <!-- Accordion: Leadership -->
+        <div class="mb-6 rounded-lg border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm">
+            <button class="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 accordion-trigger" data-target="#leadership" aria-controls="leadership" aria-expanded="false">
+                <span class="text-xl font-semibold text-gray-800 dark:text-gray-100">Leadership & Extracurricular Activities</span>
+                <svg class="h-5 w-5 text-gray-500 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.24 4.5a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            </button>
+            <div id="leadership" class="px-4 pb-4 hidden" role="region" aria-labelledby="leadership-label">
+                <p class="font-medium text-gray-800 dark:text-gray-100">School Head Boy | St. Mary's Catholic High School, Fujairah</p>
+                <p class="text-detail text-gray-600 dark:text-gray-300 mt-1">11th Grade (Academic Year: 2022-2023)</p>
+                <ul class="ml-4 mt-2 text-gray-700 dark:text-gray-300">
+                    <li>Spearheaded major school events, including Annual Day and Teacher's Day.</li>
+                    <li>Represented student body in council meetings, advocating for initiatives.</li>
+                    <li>Mentored younger students to foster a positive environment.</li>
+                    <li>Collaborated with council members to maintain campus discipline.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Tabs: Skills -->
+        <div class="rounded-lg border border-gray-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-sm">
+            <div class="px-4 py-3 border-b border-gray-200 dark:border-neutral-800">
+                <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100">Skills</h3>
+            </div>
+            <div class="p-4">
+                <div class="inline-flex rounded-md border border-gray-200 dark:border-neutral-800 bg-gray-50 dark:bg-neutral-800 p-1 text-sm" role="tablist" aria-label="Skills Tabs">
+                    <button id="tab-btn-languages" role="tab" aria-selected="true" aria-controls="tab-languages" class="tabs-trigger px-3 py-1.5 rounded-md data-[state=active]:bg-white data-[state=active]:text-gray-900 dark:data-[state=active]:bg-neutral-900 dark:data-[state=active]:text-gray-100 text-gray-600 dark:text-gray-300" data-target="#tab-languages" data-state="active">Languages</button>
+                    <button id="tab-btn-technical" role="tab" aria-selected="false" aria-controls="tab-technical" class="tabs-trigger px-3 py-1.5 rounded-md text-gray-600 dark:text-gray-300" data-target="#tab-technical">Technical</button>
+                    <button id="tab-btn-soft" role="tab" aria-selected="false" aria-controls="tab-soft" class="tabs-trigger px-3 py-1.5 rounded-md text-gray-600 dark:text-gray-300" data-target="#tab-soft">Soft</button>
+                </div>
+                <div class="mt-4">
+                    <div id="tab-languages" class="tabs-content" role="tabpanel" tabindex="0" aria-labelledby="tab-btn-languages">
+                        <ul class="ml-4 grid grid-cols-2 sm:grid-cols-3 gap-y-1 text-gray-700 dark:text-gray-300">
+                            <li>English (Fluent)</li>
+                            <li>Malayalam (Basic)</li>
+                            <li>Hindi (Basic)</li>
+                            <li>French (Basic)</li>
+                            <li>Arabic (Basic)</li>
+                        </ul>
+                    </div>
+                    <div id="tab-technical" class="tabs-content hidden" role="tabpanel" tabindex="0" aria-labelledby="tab-btn-technical">
+                        <ul class="ml-4 grid grid-cols-2 sm:grid-cols-3 gap-y-1 text-gray-700 dark:text-gray-300">
+                            <li>Web Development</li>
+                            <li>HTML</li>
+                            <li>Python</li>
+                            <li>Java</li>
+                            <li>Problem Solving</li>
+                            <li>Data Analysis</li>
+                        </ul>
+                    </div>
+                    <div id="tab-soft" class="tabs-content hidden" role="tabpanel" tabindex="0" aria-labelledby="tab-btn-soft">
+                        <ul class="ml-4 grid grid-cols-2 sm:grid-cols-3 gap-y-1 text-gray-700 dark:text-gray-300">
+                            <li>Leadership</li>
+                            <li>Event Management</li>
+                            <li>Mentorship</li>
+                            <li>Communication</li>
+                            <li>Teamwork</li>
+                            <li>Discipline Management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="mx-auto max-w-5xl px-6 py-8 text-sm text-gray-500 dark:text-gray-400" role="contentinfo">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+            <p>&copy; <span id="year"></span> Mohamed Zafar. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="mailto:zafaer213133@gmail.com" class="hover:underline">Email</a>
+                <a href="https://site-fyw8qgty4.godaddysites.com/" target="_blank" rel="noopener noreferrer" class="hover:underline">Project</a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Theme toggle with localStorage preference
+        (function() {
+            const root = document.documentElement;
+            const stored = localStorage.getItem('theme');
+            if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                root.classList.add('dark');
+            }
+        })();
+
+        document.getElementById('themeToggle')?.addEventListener('click', function() {
+            const root = document.documentElement;
+            const next = root.classList.toggle('dark') ? 'dark' : 'light';
+            localStorage.setItem('theme', next);
+            // Swap icons
+            const sun = document.getElementById('iconSun');
+            const moon = document.getElementById('iconMoon');
+            if (root.classList.contains('dark')) {
+                sun?.classList.remove('hidden');
+                moon?.classList.add('hidden');
+            } else {
+                sun?.classList.add('hidden');
+                moon?.classList.remove('hidden');
+            }
+        });
+
+        // Footer year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Print button
+        document.getElementById('printBtn')?.addEventListener('click', function() { window.print(); });
+
+        // Simple accordion behavior
+        document.querySelectorAll('.accordion-trigger').forEach(function(btn){
+            btn.addEventListener('click', function(){
+                const targetSel = btn.getAttribute('data-target');
+                if (!targetSel) return;
+                const content = document.querySelector(targetSel);
+                if (!content) return;
+                const icon = btn.querySelector('svg');
+                const isHidden = content.classList.contains('hidden');
+                document.querySelectorAll(targetSel).forEach(function(el){ el.classList.add('hidden'); });
+                if (isHidden) {
+                    content.classList.remove('hidden');
+                    btn.setAttribute('aria-expanded', 'true');
+                    icon && icon.classList.remove('rotate-180');
+                } else {
+                    content.classList.add('hidden');
+                    btn.setAttribute('aria-expanded', 'false');
+                    icon && icon.classList.add('rotate-180');
+                }
+            });
+        });
+
+        // Tabs behavior with ARIA + keyboard
+        document.querySelectorAll('.tabs-trigger').forEach(function(tab){
+            tab.addEventListener('click', function(){
+                const container = tab.closest('[role="tablist"]').parentElement;
+                const targetSel = tab.getAttribute('data-target');
+                if (!container || !targetSel) return;
+                container.querySelectorAll('.tabs-trigger').forEach(function(t){
+                    t.removeAttribute('data-state');
+                    t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
+                });
+                tab.setAttribute('data-state', 'active');
+                tab.setAttribute('aria-selected', 'true');
+                tab.setAttribute('tabindex', '0');
+                container.parentElement.querySelectorAll('.tabs-content').forEach(function(c){ c.classList.add('hidden'); });
+                const target = container.parentElement.querySelector(targetSel);
+                target && target.classList.remove('hidden');
+                target && target.focus();
+            });
+            tab.addEventListener('keydown', function(e){
+                if (!['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) return;
+                const list = tab.closest('[role="tablist"]');
+                const tabs = Array.from(list.querySelectorAll('.tabs-trigger'));
+                let idx = tabs.indexOf(tab);
+                if (e.key === 'ArrowRight') idx = (idx + 1) % tabs.length;
+                if (e.key === 'ArrowLeft') idx = (idx - 1 + tabs.length) % tabs.length;
+                if (e.key === 'Home') idx = 0;
+                if (e.key === 'End') idx = tabs.length - 1;
+                e.preventDefault();
+                tabs[idx].focus();
+                tabs[idx].click();
+            });
+        });
+
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.animate-in').forEach((el) => observer.observe(el));
+    </script>
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Mohamed Zafar",
+      "email": "mailto:zafaer213133@gmail.com",
+      "telephone": "+971505607816",
+      "jobTitle": "Web Developer",
+      "knowsLanguage": ["English", "Malayalam", "Hindi", "French", "Arabic"],
+      "url": "/"
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEAM College Predictor 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: { inter: ['Inter', 'sans-serif'] },
+            colors: {
+              primary: { 500: '#6366F1', 600: '#4F46E5' },
+              secondary: { 500: '#EC4899', 600: '#DB2777' },
+              neutral: { 100: '#F3F4F6', 900: '#111827' }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        html, body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #4b5563; }
+        input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        input[type="number"] { -moz-appearance: textfield; }
+        /* Dropdown animation */
+        .dropdown-content { display: none; opacity: 0; transition: opacity 0.2s; }
+        .dropdown-content.show { display: block; opacity: 1; }
+    </style>
+</head>
+<body class="bg-neutral-100 dark:bg-neutral-900 min-h-screen flex flex-col items-center p-4 font-inter transition-colors duration-300">
+  <main class="w-full max-w-2xl mx-auto mt-20">
+    <!-- Theme Toggle -->
+    <button id="themeToggle" type="button" aria-label="Toggle theme" class="fixed top-4 right-4 z-10 p-3 rounded-full bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 shadow-lg focus:outline-none">
+      <span id="themeIcon" aria-hidden="true">🌙</span>
+    </button>
+    <!-- Card -->
+    <section class="bg-white dark:bg-neutral-800 p-8 rounded-3xl shadow-2xl border border-neutral-200 dark:border-neutral-700">
+      <header class="text-center mb-8">
+        <h1 class="text-4xl font-black bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">KEAM College Predictor 2025</h1>
+        <p class="text-neutral-600 dark:text-neutral-300 mt-2">Find eligible colleges and courses based on 2024 KEAM cutoffs.</p>
+      </header>
+      <!-- Predictor Form -->
+      <form id="predictorForm" class="space-y-6" autocomplete="off">
+        <!-- Rank Input -->
+        <div>
+          <label for="rank" class="block text-base font-medium text-neutral-700 dark:text-neutral-200 mb-1">Your Rank</label>
+          <input type="number" id="rank" name="rank" min="1" required placeholder="e.g., 1500" class="w-full px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 shadow-sm focus:ring-2 focus:ring-primary-500" aria-describedby="rankHelp">
+          <span id="rankHelp" class="text-xs text-neutral-500 dark:text-neutral-400">Enter your KEAM Engineering rank (up to 100,000).</span>
+          <p id="rankError" class="text-red-500 text-sm mt-1"></p>
+        </div>
+        <!-- Category Dropdown -->
+        <div id="categoryDropdown" class="relative">
+          <label for="categoryBtn" class="block text-base font-medium text-neutral-700 dark:text-neutral-200 mb-1">Category</label>
+          <button id="categoryBtn" type="button" class="w-full flex justify-between items-center px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-700 text-left text-neutral-900 dark:text-neutral-100 shadow-sm focus:ring-2 focus:ring-primary-500" aria-haspopup="listbox" aria-expanded="false">Select Category <svg class="w-5 h-5 ml-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+          <ul id="categoryList" class="dropdown-content absolute z-10 mt-2 w-full bg-white dark:bg-neutral-700 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-600 max-h-60 overflow-y-auto custom-scrollbar" role="listbox"></ul>
+        </div>
+        <!-- Branch Dropdown -->
+        <div id="branchDropdown" class="relative">
+          <label for="branchBtn" class="block text-base font-medium text-neutral-700 dark:text-neutral-200 mb-1">Preferred Branches</label>
+          <button id="branchBtn" type="button" class="w-full flex justify-between items-center px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-700 text-left text-neutral-900 dark:text-neutral-100 shadow-sm focus:ring-2 focus:ring-primary-500" aria-haspopup="listbox" aria-expanded="false">Any Branch <svg class="w-5 h-5 ml-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+          <ul id="branchList" class="dropdown-content absolute z-10 mt-2 w-full bg-white dark:bg-neutral-700 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-600 max-h-60 overflow-y-auto custom-scrollbar" role="listbox"></ul>
+        </div>
+        <!-- College Dropdown -->
+        <div id="collegeDropdown" class="relative">
+          <label for="collegeBtn" class="block text-base font-medium text-neutral-700 dark:text-neutral-200 mb-1">Filter Colleges</label>
+          <button id="collegeBtn" type="button" class="w-full flex justify-between items-center px-4 py-3 border border-neutral-300 dark:border-neutral-600 rounded-xl bg-white dark:bg-neutral-700 text-left text-neutral-900 dark:text-neutral-100 shadow-sm focus:ring-2 focus:ring-primary-500" aria-haspopup="listbox" aria-expanded="false">All Colleges <svg class="w-5 h-5 ml-2 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></button>
+          <ul id="collegeList" class="dropdown-content absolute z-10 mt-2 w-full bg-white dark:bg-neutral-700 rounded-xl shadow-xl border border-neutral-200 dark:border-neutral-600 max-h-60 overflow-y-auto custom-scrollbar" role="listbox"></ul>
+        </div>
+        <!-- Predict Button -->
+        <button id="predictBtn" type="submit" class="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white py-3.5 rounded-xl font-bold text-xl hover:from-primary-700 hover:to-secondary-700 focus:outline-none focus:ring-4 focus:ring-primary-300 shadow-lg">Predict Colleges</button>
+      </form>
+      <!-- Results -->
+      <div id="results" class="mt-8 min-h-[100px] transition-all duration-300 custom-scrollbar"></div>
+      <!-- Disclaimer -->
+      <footer class="mt-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+        <p><strong>Disclaimer:</strong> This tool uses 2024 KEAM cutoff data for predictions. Actual 2025 cutoffs may vary. This is for informational purposes only.</p>
+      </footer>
+      <div id="userLocation" class="mt-2 text-center text-xs text-neutral-400 dark:text-neutral-500"></div>
+    </section>
+  </main>
+  <script>
+  // --- KEAM College Predictor 2025 ---
+  // Modern, accessible, and maintainable. All logic is in this script.
+  // Comments are provided for clarity and future maintainers (human or AI).
+
+  // --- CONFIGURATION ---
+  const DATA_URL = 'https://raw.githubusercontent.com/zafarlovesprogramming/KEAM-Cutoff-2025-TO-APPLY---Table-1/refs/heads/main/KEAM%20Cutoff%202025%20TO%20APPLY%20-%20Table%201.tsv';
+  const CATEGORY_NAMES = {
+    SM: 'SM (State Merit/General)', EZ: 'EZ (Ezhava)', MU: 'MU (Muslim)', LA: 'LA (Latin Catholic)', BH: 'BH (Other Backward Hindu)',
+    DV: 'DV (Dheevara)', VK: 'VK (Viswakarma)', BX: 'BX (B.X.)', KN: 'KN (Kusavan)', KU: 'KU (Kudumi)', SC: 'SC (Scheduled Caste)',
+    ST: 'ST (Scheduled Tribe)', EW: 'EW (EWS)'
+  };
+  const CATEGORY_ORDER = ["SM", "EZ", "MU", "LA", "BH", "DV", "VK", "BX", "KN", "KU", "SC", "ST", "EW"];
+
+  // --- STATE ---
+  let keamData = [];
+  let uniqueCategories = [], uniqueBranches = [], uniqueColleges = [];
+  let selectedCategory = null, selectedBranches = [], selectedColleges = [];
+
+  // --- THEME TOGGLE ---
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  function setTheme(theme) {
+    localStorage.setItem('theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+  themeToggle.onclick = () => setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
+  setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+
+  // --- FETCH DATA ---
+  async function fetchData() {
+    try {
+      const resp = await fetch(DATA_URL);
+      if (!resp.ok) throw new Error('Network error');
+      const tsv = await resp.text();
+      return parseTSV(tsv);
+    } catch (e) {
+      showError('Failed to load KEAM data. Please check your internet connection or try again later.');
+      return [];
+    }
+  }
+  // Parse TSV to array of objects
+  function parseTSV(tsvText) {
+    const lines = tsvText.split('\n');
+    let headerLineIndex = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].trim().startsWith('Name of College')) {
+            headerLineIndex = i;
+            break;
+        }
+    }
+
+    if (headerLineIndex === -1) {
+        console.error("Error: 'Name of College' header line not found in TSV.");
+        throw new Error("'Name of College' header line not found in TSV.");
+    }
+
+    const headerLine = lines[headerLineIndex];
+    const headers = headerLine.split('\t').map(h => h.trim()).filter(Boolean);
+
+    const collegeNameColIndex = headers.indexOf('Name of College');
+    const courseColIndex = headers.indexOf('Course');
+    const specialCategoriesColIndex = headers.indexOf('Special Categories');
+
+    const data = [];
+    const categoryOrder = ["SM", "EZ", "MU", "LA", "BH", "DV", "VK", "BX", "KN", "KU", "SC", "ST", "EW"];
+    const tsvHeaderToCategoryCode = {};
+    for (const code of categoryOrder) {
+        const fullHeader = headers.find(h => h.includes(code));
+        if (fullHeader) {
+            tsvHeaderToCategoryCode[fullHeader] = code;
+        }
+    }
+
+    for (let i = headerLineIndex + 1; i < lines.length; i++) {
+        const line = lines[i];
+        const values = line.split('\t').map(v => v.trim());
+
+        if (values.length < headers.length || line.trim() === '') {
+            continue;
+        }
+
+        if (collegeNameColIndex === -1 || courseColIndex === -1 ) {
+            console.error("Missing required headers in TSV: 'Name of College' or 'Course'.");
+            throw new Error("Missing required headers in TSV.");
+        }
+
+        const collegeName = values[collegeNameColIndex];
+        const courseName = values[courseColIndex];
+
+        if (!collegeName || !courseName) {
+            continue;
+        }
+
+        headers.forEach((header, index) => {
+            const categoryCode = tsvHeaderToCategoryCode[header];
+            if (categoryCode && values[index]) {
+                const rankValueRaw = values[index];
+                if (rankValueRaw !== '-' && !isNaN(parseInt(rankValueRaw, 10))) {
+                    data.push({
+                        "College": collegeName,
+                        "Course": courseName,
+                        "Category": categoryCode,
+                        "Last Rank 2024": parseInt(rankValueRaw, 10)
+                    });
+                }
+            }
+        });
+
+        if (specialCategoriesColIndex !== -1 && values[specialCategoriesColIndex]) {
+            const specialCategoriesValue = values[specialCategoriesColIndex];
+            if (specialCategoriesValue) {
+                const specialCategories = specialCategoriesValue.split(',').map(s => s.trim()).filter(Boolean);
+                specialCategories.forEach(sc => {
+                    const parts = sc.split(':');
+                    if (parts.length === 2 && !isNaN(parseInt(parts[1], 10))) {
+                        data.push({
+                            "College": collegeName,
+                            "Course": courseName,
+                            "Category": parts[0].trim(),
+                            "Last Rank 2024": parseInt(parts[1], 10)
+                        });
+                    }
+                });
+            }
+        }
+    }
+    return data;
+  }
+
+  // --- POPULATE DROPDOWNS ---
+  function populateDropdown(listId, items, labelMap, multi = false) {
+    const list = document.getElementById(listId);
+    list.innerHTML = '';
+    items.forEach(item => {
+      const li = document.createElement('li');
+      li.setAttribute('role', 'option');
+      li.setAttribute('tabindex', '0');
+      li.className = 'px-4 py-2 cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-800/60 rounded-lg';
+      li.textContent = labelMap ? labelMap[item] || item : item;
+      li.onclick = () => {
+        if (multi) {
+          if (listId === 'branchList') {
+            selectedBranches = selectedBranches.includes(item) ? selectedBranches.filter(b => b !== item) : [...selectedBranches, item];
+            updateDropdownLabel('branchBtn', selectedBranches.length ? `${selectedBranches.length} selected` : 'Any Branch');
+          } else if (listId === 'collegeList') {
+            selectedColleges = selectedColleges.includes(item) ? selectedColleges.filter(c => c !== item) : [...selectedColleges, item];
+            updateDropdownLabel('collegeBtn', selectedColleges.length ? `${selectedColleges.length} selected` : 'All Colleges');
+          }
+        } else {
+          selectedCategory = item;
+          updateDropdownLabel('categoryBtn', labelMap[item] || item);
+          closeDropdown('categoryList');
+        }
+      };
+      li.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') li.click(); };
+      list.appendChild(li);
+    });
+  }
+  function updateDropdownLabel(btnId, text) {
+    document.getElementById(btnId).childNodes[0].textContent = text + ' ';
+  }
+  function closeDropdown(listId) {
+    document.getElementById(listId).classList.remove('show');
+    document.getElementById(listId.replace('List', 'Btn')).setAttribute('aria-expanded', 'false');
+  }
+  function openDropdown(listId) {
+    document.getElementById(listId).classList.add('show');
+    document.getElementById(listId.replace('List', 'Btn')).setAttribute('aria-expanded', 'true');
+  }
+
+  // --- EVENT BINDINGS FOR DROPDOWNS ---
+  function setupDropdown(btnId, listId) {
+    const btn = document.getElementById(btnId);
+    btn.onclick = () => {
+      const list = document.getElementById(listId);
+      if (list.classList.contains('show')) closeDropdown(listId); else openDropdown(listId);
+    };
+    btn.onkeydown = e => { if (e.key === 'ArrowDown') { openDropdown(listId); listId && document.getElementById(listId).firstChild?.focus(); } };
+    document.addEventListener('click', e => { if (!btn.contains(e.target) && !document.getElementById(listId).contains(e.target)) closeDropdown(listId); });
+  }
+  setupDropdown('categoryBtn', 'categoryList');
+  setupDropdown('branchBtn', 'branchList');
+  setupDropdown('collegeBtn', 'collegeList');
+
+  // --- FORM SUBMISSION ---
+  document.getElementById('predictorForm').onsubmit = e => {
+    e.preventDefault();
+    const rank = parseInt(document.getElementById('rank').value, 10);
+    if (!rank || rank < 1) {
+      showError('Please enter a valid, positive rank.');
+      return;
+    }
+    if (!selectedCategory) {
+      showError('Please select a category.');
+      return;
+    }
+    showResults(runPrediction(rank, selectedCategory, selectedBranches, selectedColleges));
+  };
+
+  // --- PREDICTION LOGIC ---
+  function runPrediction(rank, category, branches, colleges) {
+    // Filter by rank and category (including SM)
+    let eligible = keamData.filter(item => (item.Category === category || item.Category === 'SM') && rank <= parseInt(item['Last Rank 2024']));
+    if (branches.length) eligible = eligible.filter(item => branches.includes(item.Course));
+    if (colleges.length) eligible = eligible.filter(item => colleges.includes(item['College']));
+    // Deduplicate by College+Course, prefer better rank
+    const map = new Map();
+    eligible.forEach(item => {
+      const key = item['College'] + '|' + item.Course;
+      if (!map.has(key) || parseInt(item['Last Rank 2024']) < parseInt(map.get(key)['Last Rank 2024'])) map.set(key, item);
+    });
+    return Array.from(map.values());
+  }
+
+  // --- RENDER RESULTS ---
+  function showResults(results) {
+    const div = document.getElementById('results');
+    if (!results.length) {
+      div.innerHTML = '<div class="text-center p-8 text-neutral-500 dark:text-neutral-400 border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-xl text-lg">No matching colleges found. Try adjusting your filters.</div>';
+      return;
+    }
+    // Group by college, sort by best rank
+    const grouped = {};
+    results.forEach(item => {
+      if (!grouped[item['College']]) grouped[item['College']] = [];
+      grouped[item['College']].push(item);
+    });
+    const sortedColleges = Object.keys(grouped).sort((a, b) => Math.min(...grouped[a].map(i => i['Last Rank 2024'])) - Math.min(...grouped[b].map(i => i['Last Rank 2024'])));
+    div.innerHTML = '<h2 class="text-2xl font-bold text-center mb-6 text-neutral-800 dark:text-neutral-200">Prediction Results</h2>' +
+      sortedColleges.map(college => `
+        <div class="mb-6 bg-white dark:bg-neutral-800/50 p-6 rounded-2xl shadow-md border border-neutral-200 dark:border-neutral-700">
+          <h3 class="text-xl font-bold text-neutral-900 dark:text-neutral-100 mb-3">${college}</h3>
+          <ul class="space-y-2">
+            ${grouped[college].sort((a,b)=>a['Last Rank 2024']-b['Last Rank 2024']).map(course => `
+              <li class="flex justify-between items-start p-3 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-700/50 transition-colors">
+                <div><span class="font-semibold">${course.Course}</span><br><span class="text-sm text-neutral-500">${CATEGORY_NAMES[course.Category]||course.Category}</span></div>
+                <span class="inline-block bg-primary-100 text-primary-700 dark:bg-primary-900 dark:text-primary-200 px-3 py-1 rounded-full font-bold">${course['Last Rank 2024']}</span>
+              </li>`).join('')}
+          </ul>
+        </div>`).join('');
+  }
+  function showError(msg) {
+    document.getElementById('results').innerHTML = `<div class="text-center p-4 text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/50 border border-red-300 dark:border-red-500/50 rounded-xl font-semibold text-lg">${msg}</div>`;
+  }
+
+  // --- INITIALIZE APP ---
+  (async function init() {
+    document.getElementById('results').innerHTML = '<div class="text-center p-8 text-neutral-500 dark:text-neutral-400 border-2 border-dashed border-neutral-300 dark:border-neutral-600 rounded-xl text-lg">Loading KEAM data...</div>';
+    keamData = await fetchData();
+    if (!keamData.length) return;
+    // Extract unique values
+    uniqueCategories = Array.from(new Set(keamData.map(i => i.Category))).sort((a,b)=>CATEGORY_ORDER.indexOf(a)-CATEGORY_ORDER.indexOf(b));
+    uniqueBranches = Array.from(new Set(keamData.map(i => i.Course))).sort();
+    uniqueColleges = Array.from(new Set(keamData.map(i => i['College']))).sort();
+    // Populate dropdowns
+    populateDropdown('categoryList', uniqueCategories, CATEGORY_NAMES);
+    populateDropdown('branchList', uniqueBranches, null, true);
+    populateDropdown('collegeList', uniqueColleges, null, true);
+  })();
+  </script>
+</body>
+</html>

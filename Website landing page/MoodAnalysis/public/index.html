@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Analysis Platform</title>
+  <link rel="stylesheet" href="../src/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Mood Analysis Platform</h1>
+    <p>Real-time mood detection using facial and voice recognition. All processing is local for your privacy.</p>
+  </header>
+  <main>
+    <section id="video-section">
+      <h2>Facial Emotion Recognition</h2>
+      <video id="video" autoplay muted playsinline></video>
+      <div id="face-emotion-results">
+        <!-- Real-time facial emotion results will appear here -->
+      </div>
+    </section>
+    <section id="voice-section">
+      <h2>Voice Emotion Recognition</h2>
+      <div id="mic-status">
+        <span class="mic-icon">🎤</span>
+        <span id="mic-text">Microphone: Off</span>
+      </div>
+      <div id="voice-emotion-results">
+        <!-- Real-time voice emotion results will appear here -->
+      </div>
+    </section>
+    <section id="privacy-controls">
+      <h2>Privacy Controls</h2>
+      <label><input type="checkbox" id="toggle-video" checked> Enable Camera</label>
+      <label><input type="checkbox" id="toggle-mic" checked> Enable Microphone</label>
+      <button id="show-privacy">Privacy Policy</button>
+    </section>
+    <section id="mood-history">
+      <h2>Mood History</h2>
+      <canvas id="mood-chart" width="400" height="200"></canvas>
+      <!-- Mood history chart will be rendered here -->
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Mood Analysis Platform. All rights reserved.</p>
+    <button id="export-data">Export Mood Data</button>
+  </footer>
+  <script src="../src/ui.js"></script>
+</body>
+</html> 
